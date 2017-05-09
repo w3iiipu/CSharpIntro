@@ -18,7 +18,13 @@ class Program
         //StringTypes();
         //Operators();
         //NullableType();
-        NullableType2();
+        //NullableType2();
+        //TypeCasting();
+        //TestArrays();
+        //SampleClass.HelloWorld();
+        //SampleClass.HelloSwitch();
+        //SampleClass.DoWhileLoop();
+        SampleClass.HelloLoops();
     }
 
     static void UserName()
@@ -60,7 +66,7 @@ class Program
 
     }
 
-    static void Operators()        
+    static void Operators()
     {
         int Number = 15;
 
@@ -97,4 +103,140 @@ class Program
 
     }
 
-} 
+    static void TypeCasting()
+    {
+        float f = 12345.123F;
+
+        int i = (int)f;                                 //explicit casting from float to int using operator (). Will not thorw exception
+
+        int j = Convert.ToInt32(f);                     //explicit casting using the convert class. Will throw exception
+
+        Console.WriteLine(i + " " + j);
+
+        string StrNum = "100";
+        int k = int.Parse(StrNum);                      //when sure about conversion otherwise use tryparse.
+        Console.WriteLine(k);
+
+        string StrNum2 = "100try";
+        int result = 0;
+        bool IsConversionSuccessful = int.TryParse(StrNum2, out result);    //also returns a bool if conversion is successful or not
+        if (IsConversionSuccessful)
+        {
+            Console.WriteLine(result);
+        }
+        else
+        {
+            Console.WriteLine("Please enter a valid number");
+        }
+
+    }
+
+    static void TestArrays()
+    {
+        int[] EvenNum = new int[3];
+        EvenNum[0] = 2;
+        EvenNum[1] = 4;
+        EvenNum[2] = 6;
+
+        int[] OddNum = { 1, 3, 5 };
+
+        Console.WriteLine(EvenNum[1]);
+        Console.WriteLine(OddNum[2]);
+    }
+
+    /// <summary>
+    /// This XML comment will document what the class is used for
+    /// </summary>
+    class SampleClass
+    {
+        public static void HelloWorld()
+        {
+            Console.WriteLine("hellow World");
+        }
+
+        public static void HelloSwitch()
+        {
+            Console.WriteLine("Please enter a number: ");
+            int UserInput = int.Parse(Console.ReadLine());
+
+            switch (UserInput)
+            {
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    Console.WriteLine("Your number is between 1-4");
+                    break;
+                case 11:
+                case 12:
+                case 13:
+                    Console.WriteLine("Your number is between 11-13");
+                    break;
+                default:
+                    Console.WriteLine("Your number is irrelevant");
+                    break;
+
+            }
+        }
+
+        public static void DoWhileLoop()
+        {
+            string UserCont = "";
+
+            do
+            {
+                Console.WriteLine("Please enter a target nuber: ");
+                int UserInput = int.Parse(Console.ReadLine());
+                int start = 0;
+
+                while (start <= UserInput)
+                {
+                    Console.Write(start + " ");
+                    start = start + 2;
+                }
+
+                do
+                {
+                    Console.WriteLine("Do you want to continue? Yes or No");
+                    UserCont = Console.ReadLine().ToLower();
+                    if (UserCont != "yes" && UserCont != "no")
+                    {
+                        Console.WriteLine("Please input a valid selection. Yes or No.");
+                    }
+                } while (UserCont != "yes" && UserCont != "no");
+            } while (UserCont == "yes");
+        }
+
+        public static void HelloLoops()
+        {
+            int[] Numbers = { 101, 102, 103 };
+
+            foreach (int i in Numbers)                  //loops all in the collection
+            {
+                Console.WriteLine(i);
+            }
+
+            for (int j = 0; j < Numbers.Length; j++)    //loops when we know # of iteration
+            {
+                Console.WriteLine(Numbers[j]);
+            }
+
+            for (int k = 0; k <= 20; k++)
+            {
+                if (k % 2 == 1)
+                    continue;                           //skips following execution and goes back to loop.
+
+                Console.WriteLine(k);
+            }
+        }
+
+        public static void HelloMethods()
+        {
+
+        }
+    }
+
+
+
+
+}
