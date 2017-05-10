@@ -1,4 +1,6 @@
 ﻿using System;
+using PATA = ProjectA.TeamA;
+
 
 class Program
 {
@@ -54,7 +56,16 @@ class Program
         //SampleClass.ParamTestArrays();
         //SampleClass.ParamsMethod(1, 2, 3, 4, 5);                  //method arguments when you invoke, method parameters when you declare
 
+        //PATA.ClassA.Print();                                        //Alias directive
+        //ProjectA.TeamB.ClassA.Print();                              //full directive
 
+        /*
+        Customer C1 = new Customer();                               //Default Constructor with default parameters
+        C1.PrintFullName();
+
+        Customer C2 = new Customer("Wei", "Oo");                     //Overloading constuctor
+        C2.PrintFullName();
+        */
 
     }
 
@@ -441,6 +452,34 @@ class Program
 
     }
 
+class Customer
+{
+    string _firstName;
+    string _lastName;
+
+    public Customer()   //used as default
+        : this("No FirstName Provided", "No LastNameProvided") //defaul parameter when nothing is passed into parameters
+    {
+    }
+
+    public Customer(string FirstName, string LastName) //Constructor 
+    {
+        this._firstName = FirstName;
+        this._lastName = LastName;
+    }
+
+    public void PrintFullName()
+    {
+        Console.WriteLine("Hello, {0} {1}", this._firstName, this._lastName);
+    }
+
+    ~Customer()     //Destuctor - clean up resources by garbage collection hold during lifetime
+    {
+        //Clean up Code
+    }
+
+
+}
 
 
 
