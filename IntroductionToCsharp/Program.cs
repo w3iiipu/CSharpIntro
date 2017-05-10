@@ -6,12 +6,12 @@ class Program
     static void Main1()
     {
 
-        Console.WriteLine("Welcome to C# Training");
+        Console.WriteLine("Hello");
     }
 
     static void Main()
     {
-        Console.WriteLine("Hello");
+        Console.WriteLine("Welcome to C# Training");
         //Main1();
         //UserName();
         //DataTypes();
@@ -23,8 +23,39 @@ class Program
         //TestArrays();
         //SampleClass.HelloWorld();
         //SampleClass.HelloSwitch();
+        //SampleClass.CoffeeSwitch();
+        //SampleClass.CoffeeSwitchDoWhile();
+        //SampleClass.CoffeeSwitchDoWhile2();
         //SampleClass.DoWhileLoop();
-        SampleClass.HelloLoops();
+        //SampleClass.HelloLoops();
+
+        /*
+        SampleClass user = new SampleClass();                       //instance method by creating an object of the class.
+        string UserName = user.GetName("John", "Doe");
+        Console.WriteLine(UserName);
+        */
+
+        //SampleClass.HelloStaticMethods();                         //static method
+
+        /*
+        int i = 0;                                         
+        SampleClass.SimpleMethod(ref i);                            //pass by reference
+        Console.WriteLine(i);
+        */
+
+        /*
+        int Total = 0;
+        int Product = 0;
+        SampleClass.Calculate(10, 20, out Total, out Product);      //out parameters
+        Console.WriteLine("The Sum is {0} and Product is {1}", Total, Product);
+        */
+
+        //SampleClass.ParamsMethod();
+        //SampleClass.ParamTestArrays();
+        //SampleClass.ParamsMethod(1, 2, 3, 4, 5);                  //method arguments when you invoke, method parameters when you declare
+
+
+
     }
 
     static void UserName()
@@ -143,6 +174,7 @@ class Program
         Console.WriteLine(EvenNum[1]);
         Console.WriteLine(OddNum[2]);
     }
+}
 
     /// <summary>
     /// This XML comment will document what the class is used for
@@ -179,6 +211,145 @@ class Program
             }
         }
 
+        public static void CoffeeSwitch()
+        {
+            int ItemTotal = 0;
+            string UserCont = "";
+
+            Start:
+            Console.WriteLine("1 - Small, 2- Medium, 3 - Large");
+            int UserInput = int.Parse(Console.ReadLine());
+
+            switch (UserInput)
+            {
+                case 1:
+                    ItemTotal += 1;
+                    break;
+                case 2:
+                    ItemTotal += 2;
+                    break;
+                case 3:
+                    ItemTotal += 3;
+                    break;
+                default:
+                    Console.WriteLine("{0} is an invalid selection", UserInput);
+                    goto Start;
+            }
+
+            Decide:
+            Console.WriteLine("Do you want to buy another coffee - Yes or No?");
+            UserCont = Console.ReadLine().ToLower();
+
+            switch (UserCont)
+            {
+                case "yes":
+                    goto Start;
+                case "no":
+                    break;
+                default:
+                    Console.WriteLine("{0} is an invalid option! Please try again!", UserCont);
+                    goto Decide;
+            }
+
+            Console.WriteLine("Your Item Total is $ {0}", ItemTotal);
+        }
+
+        public static void CoffeeSwitchDoWhile()
+        {
+            string UserCont = "";
+            int ItemTotal = 0;
+            int GrandTotal = 0;
+
+            do
+            {
+                Console.WriteLine("1 - Small, 2- Medium, 3 - Large");
+                int UserInput = int.Parse(Console.ReadLine());
+
+                switch (UserInput)
+                {
+                    case 1:
+                        ItemTotal += 1;
+                        break;
+                    case 2:
+                        ItemTotal += 2;
+                        break;
+                    case 3:
+                        ItemTotal += 3;
+                        break;
+                    default:
+                        Console.WriteLine("{0} is an invalid selection", UserInput);
+                        break;
+                }
+
+                Console.WriteLine("Please enter quantity: ");
+                int UserQuantity = int.Parse(Console.ReadLine());
+                GrandTotal = ItemTotal * UserQuantity;
+
+                Console.WriteLine("Your Item Total is $ {0}. Your Grand Total is $ {1}", ItemTotal, GrandTotal);
+                do
+                {
+                    Console.WriteLine("Do you want to buy another coffee - Yes or No?");
+                    UserCont = Console.ReadLine().ToLower();
+                    if (UserCont != "yes" && UserCont != "no")
+                    {
+                        Console.WriteLine("Please enter yes or no.");
+                    }
+
+                } while (UserCont != "yes" && UserCont != "no");
+            } while (UserCont == "yes");
+        }
+
+        public static void CoffeeSwitchDoWhile2()
+        {
+            string UserCont = string.Empty;
+            int ItemTotal = 0;
+            int GrandTotal = 0;
+
+            do
+            {
+                int UserInput = -1;
+                do
+                {
+                    Console.WriteLine("1 - Small, 2- Medium, 3 - Large");
+                    UserInput = int.Parse(Console.ReadLine());
+
+                    switch (UserInput)
+                    {
+                        case 1:
+                            ItemTotal += 1;
+                            break;
+                        case 2:
+                            ItemTotal += 2;
+                            break;
+                        case 3:
+                            ItemTotal += 3;
+                            break;
+                        default:
+                            Console.WriteLine("{0} is an invalid selection", UserInput);
+                            break;
+                    }
+
+                    Console.WriteLine("Please enter quantity: ");
+                    int UserQuantity = int.Parse(Console.ReadLine());
+                    GrandTotal = ItemTotal * UserQuantity;
+
+                } while (UserInput != 1 && UserInput != 2 && UserInput != 3);
+
+                do
+                {
+                    Console.WriteLine("Do you want to buy another coffee - Yes or No?");
+                    UserCont = Console.ReadLine().ToLower();
+                    if (UserCont != "yes" && UserCont != "no")
+                    {
+                        Console.WriteLine("Please enter yes or no.");
+                    }
+                } while (UserCont != "yes" && UserCont != "no");
+            } while (UserCont != "no");
+
+            Console.WriteLine("Thank you for shopping. Your Grandtotal is $ {0}", GrandTotal);
+        }
+
+   
         public static void DoWhileLoop()
         {
             string UserCont = "";
@@ -230,13 +401,48 @@ class Program
             }
         }
 
-        public static void HelloMethods()
+        public static void HelloStaticMethods()
         {
-
+            Console.WriteLine("Hello World");
         }
+
+        public string GetName(string FN, string LN)
+        {
+            return FN + " " + LN;
+        }
+
+        public static void SimpleMethod(ref int j)       //reference parameters - pass by reference - point to the same memory location, j will modify the original refernece i
+        {
+            j = 101;
+        }
+
+        public static void Calculate (int i, int j, out int Sum, out int Product) //out parameters
+        {
+            Sum = i + j;
+            Product = i * j;
+        }
+
+        public static void ParamTestArrays()
+        {
+            int[] Numbers = { 101, 102, 103 };
+
+            ParamsMethod(Numbers);
+        }
+
+        public static void ParamsMethod(params int[] Numbers)               //Only one parameter arrays and must be the last keyword parameter
+        {
+            Console.WriteLine("there are {0} elements", Numbers.Length);
+
+            foreach (int i in Numbers)
+            {
+                Console.WriteLine(i);
+            }
+        }
+
     }
 
 
 
 
-}
+
+
