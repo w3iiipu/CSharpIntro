@@ -9,7 +9,7 @@ namespace ConsoleCalulator
         /// </summary>
         static void Main()
         {
-            Say.Write("Welcome to the Console Calculator!", true, 25f, ConsoleColor.Green);
+            Say.Write("Welcome to the Console Calculator!", true, 20f, ConsoleColor.Green);
 
             bool UserCont = true;
             string UserChoice;
@@ -33,7 +33,7 @@ namespace ConsoleCalulator
         }
     }
 
-    public class Calculator
+    class Calculator
     {
         /// <summary>
         /// This is the main calculator method for the basic functions
@@ -56,7 +56,7 @@ namespace ConsoleCalulator
                 input1 = Console.ReadLine();
             }
 
-            Say.Write("Please enter an operator: +, -, *, / ", true, 25f, ConsoleColor.Green);
+            Say.Write("Please enter an operator: +, -, *, /, %, ^, s ", true, 25f, ConsoleColor.Green);
             Say.Write(">>", false, 50f, ConsoleColor.Green);
             UserOp = Console.ReadKey().KeyChar;
             Console.WriteLine();
@@ -65,22 +65,26 @@ namespace ConsoleCalulator
             while (!CheckOperation(UserOp))
             {
                 Say.Write("That is not a valid operator!", true, 25f, ConsoleColor.Red);
-                Say.Write("Please enter an operator: +, -, *, / ", true, 25f, ConsoleColor.Green);
+                Say.Write("Please enter an operator: +, -, *, /, %, ^, s", true, 25f, ConsoleColor.Green);
                 Say.Write(">>", false, 50f, ConsoleColor.Green);
                 UserOp = Console.ReadKey().KeyChar;
                 Console.WriteLine();
             }
 
-            //User validation for integer
-            Say.Write("Please enter the second number", true, 25f, ConsoleColor.Green);
-            Say.Write(">>", false, 50f, ConsoleColor.Green);
-            string input2 = Console.ReadLine();
-
-            while (!Int32.TryParse(input2, out num2))
+            //skip second input prompt if user selects squareroot operator.
+            if (UserOp != 's')
             {
-                Say.Write("Not a valid number. Please try again!", true, 25f, ConsoleColor.Red);
-                Say.Write(">>", false, 20f, ConsoleColor.Green);
-                input2 = Console.ReadLine();
+                //User validation for integer
+                Say.Write("Please enter the second number", true, 25f, ConsoleColor.Green);
+                Say.Write(">>", false, 50f, ConsoleColor.Green);
+                string input2 = Console.ReadLine();
+
+                while (!Int32.TryParse(input2, out num2))
+                {
+                    Say.Write("Not a valid number. Please try again!", true, 25f, ConsoleColor.Red);
+                    Say.Write(">>", false, 20f, ConsoleColor.Green);
+                    input2 = Console.ReadLine();
+                }
             }
 
             //This is prompt for output
@@ -89,11 +93,16 @@ namespace ConsoleCalulator
             //Calculation functions
             switch (UserOp)
             {
-                case '+': Console.WriteLine(num1 + num2); break;
+                //case '+': Console.WriteLine(num1 + num2); break;
+                case '+': Console.WriteLine(Addition(num1, num2)); break;
 
-                case '-': Console.WriteLine(num1 - num2); break;
+                case '-': Console.WriteLine(Subtraction(num1, num2)); break;
 
-                case '*': Console.WriteLine(num1 * num2); break;
+                case '*': Console.WriteLine(Multiplication(num1, num2)); break;
+
+                case '^': Console.WriteLine(PowerOf(num1, num2)); break;
+
+                case '%': Console.WriteLine(Modulo(num1, num2)); break;
 
                 case '/':
 
@@ -104,10 +113,62 @@ namespace ConsoleCalulator
                     }
                     else
                     {
-                        Console.WriteLine(num1 / num2); break;
+                        Console.WriteLine(Division(num1, num2)); break;
                     }
+
+                case 's': Console.WriteLine(SquareRoot(num1)); break;
             }
         }
+
+#region MathFunctions
+        /// <summary>
+        /// Math functions for switch cases.
+        /// </summary>
+        /// <param name="num1">user's first input</param>
+        /// <param name="num2">user's second input</param>
+        /// <returns></returns>
+        public int Addition(int num1, int num2)
+        {
+            int Answer = num1 + num2;
+            return Answer;
+        }
+
+        public int Subtraction (int num1, int num2)
+        {
+            int Answer = num1 - num2;
+            return Answer;
+        }
+
+        public int Multiplication(int num1, int num2)
+        {
+            int Answer = num1 * num2;
+            return Answer;
+        }
+
+        public int Division(int num1, int num2)
+        {
+            int Answer = num1 / num2;
+            return Answer;
+        }
+
+        public int Modulo(int num1, int num2)
+        {
+            int Answer = num1 % num2;
+            return Answer;
+        }
+
+        public double PowerOf(int num1, int num2)
+        {
+            double Answer = Math.Pow(num1, num2);
+            return Answer;
+        }
+
+        public double SquareRoot(int num1)
+        {
+            double Answer = Math.Sqrt(num1);
+            return Answer;
+        }
+#endregion 
 
         /// <summary>
         /// This method validates the operator enter by the user
@@ -128,6 +189,15 @@ namespace ConsoleCalulator
                     return true;
                     break;
                 case '/':
+                    return true;
+                    break;
+                case '^':
+                    return true;
+                    break;
+                case '%':
+                    return true;
+                    break;
+                case 's':
                     return true;
                     break;
                 default:
