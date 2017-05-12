@@ -2,7 +2,7 @@
 
 namespace HelloInterface
 {
-    public  class Program 
+    public  class Program :I1, I2
     {
         static void Main(string[] args)
         {
@@ -13,7 +13,27 @@ namespace HelloInterface
             //ICustomer1 C1 = new ICustomer1();       //Cannot create an instance if interface
             ICustomer1 Cust = new Customer();           //Customer is inheriting from interface chain
             Cust.Print1();
+
+            Sample s = new Sample();
+
+            Program p = new Program();
+            p.InterfaceMethod();            //**default implementation
+            ((I2)p).InterfaceMethod();              //**explicit type casting interface method 
+
+            I1 i1 = new Program();                  //alternative  way to type cast interface methods
+            I2 i2 = new Program();
         }
+
+        public void InterfaceMethod()      //**public for default interface implementation        
+        {   
+            Console.WriteLine("I1 Interface");
+        }
+
+        void I2.InterfaceMethod()                   //**explicit implementation cannot use access modifier i.e. public  
+        {
+            Console.WriteLine("I2 Interface");
+        }
+
     }
 
     interface ICustomer1         //NO explicit access modifiers
@@ -25,6 +45,8 @@ namespace HelloInterface
     {
         void Print2();
     }
+
+    
 
    public  class Customer : ICustomer2  //the class implements a interface chain must provides all implementations 
     {
@@ -39,8 +61,25 @@ namespace HelloInterface
         }
     }
 
-    public class Sample      //class cannot inherit from multiple class but can inherit multiple interface               
+    /// <summary>
+    /// why kenot inherit interface 1?
+    /// </summary>
+    public class Sample : ICustomer1  //class cannot inherit from multiple class but can inherit multiple interface               
     {
+        public void Print1()
+        {
+            Console.WriteLine("ICsutomer1 methd");
+        }
+    }
 
+
+    interface I1
+    {
+        void InterfaceMethod();
+    }
+
+    interface I2
+    {
+        void InterfaceMethod();
     }
 }
